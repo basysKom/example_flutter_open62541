@@ -1,0 +1,12 @@
+diff --git a/examples/opcua/waterpump/simulationserver/simulationserver.h b/examples/opcua/waterpump/simulationserver/simulationserver.h
+index de6d1dd..9e7d41c 100644
+--- a/examples/opcua/waterpump/simulationserver/simulationserver.h
++++ b/examples/opcua/waterpump/simulationserver/simulationserver.h
+@@ -115,6 +115,7 @@ public:
+     void setPercentFillTank1(double fill);
+     void setPercentFillTank2(double fill);
+     void setTank2ValveState(bool state);
++    void setTank2TargetValue(double targetFill);
+ 
+     double readTank2TargetValue();
+ 

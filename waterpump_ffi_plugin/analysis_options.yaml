@@ -1,0 +1,5 @@
+analyzer:
+  exclude:
+    - native_code/sdk/**
+  errors:
+    todo: ignore

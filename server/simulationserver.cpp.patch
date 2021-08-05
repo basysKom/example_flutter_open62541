@@ -1,0 +1,53 @@
+diff --git a/examples/opcua/waterpump/simulationserver/simulationserver.cpp b/examples/opcua/waterpump/simulationserver/simulationserver.cpp
+index edce931..8cee3c2 100644
+--- a/examples/opcua/waterpump/simulationserver/simulationserver.cpp
++++ b/examples/opcua/waterpump/simulationserver/simulationserver.cpp
+@@ -339,6 +339,13 @@ double DemoServer::readTank2TargetValue()
+     return static_cast<double *>(var.data)[0];
+ }
+ 
++void DemoServer::setTank2TargetValue(double targetFill)
++{
++    UA_Variant val;
++    UA_Variant_setScalarCopy(&val, &targetFill, &UA_TYPES[UA_TYPES_DOUBLE]);
++    UA_Server_writeValue(this->m_server, this->m_tank2TargetPercentNode, val);
++}
++
+ UA_NodeId DemoServer::addMethod(const UA_NodeId &folder, const QString &variableNode, const QString &description,
+                                 const QString &browseName, const QString &displayName, UA_MethodCallback cb,
+                                 quint32 referenceType)
+@@ -419,18 +426,29 @@ void DemoServer::launch()
+             setPercentFillTank1(m_percentFilledTank1 - 1);
+             setPercentFillTank2(m_percentFilledTank2 + 1);
+             if (qFuzzyIsNull(m_percentFilledTank1) || m_percentFilledTank2 >= targetValue) {
+-                setState(MachineState::Idle);
+-                m_machineTimer.stop();
++                // setState(MachineState::Idle);
++                // m_machineTimer.stop();
++                setTank2TargetValue(0);
++                setState(MachineState::Flushing);
+             }
+          } else if (m_state == MachineState::Flushing && m_percentFilledTank2 > targetValue) {
++             setPercentFillTank1(m_percentFilledTank1 + 1);
+              setPercentFillTank2(m_percentFilledTank2 - 1);
+              if (m_percentFilledTank2 <= targetValue) {
+-                 setTank2ValveState(false);
+-                 setState(MachineState::Idle);
+-                 m_machineTimer.stop();
++                 // setTank2ValveState(false);
++                 // setState(MachineState::Idle);
++                 // m_machineTimer.stop();
++                setTank2TargetValue(100);
++                setState(MachineState::Pumping);
+              }
+          }
+      });
++
++
++     // Start operation...
++     setTank2TargetValue(100);
++     setState(MachineState::Pumping);
++     m_machineTimer.start();
+ }
+ 
+ QT_END_NAMESPACE
