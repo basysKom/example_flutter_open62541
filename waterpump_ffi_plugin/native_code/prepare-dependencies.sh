@@ -13,7 +13,7 @@ if [ ! -e "open62541" ]; then
 
   cd open62541
   git checkout 1.2 # Tested version was 1.2
-  git apply ../open62541-sharedlib-CMakeLists.txt.patch
+  git apply ../open62541-CMakeLists.txt.patch
 
   # Build open62541 and put install files in a subdirectory (we need the includes)
   mkdir -p build/install_dir && cd build
