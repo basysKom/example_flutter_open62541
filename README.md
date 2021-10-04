@@ -5,7 +5,7 @@ This is a small demo project showing how to use open62541 with Flutter and async
 The demo project was developed using Ubuntu 18.04 and tested on Ubuntu 18.04 and Android.
 
 ### OPC UA server
-- For the example OPC UA server you need to install Qt (see https://doc.qt.io/qt-5/gettingstarted.html) along with the qtopcua plugin (see https://github.com/qt/qtopcua). I used Qt 5.15.2. There is a script `clone-and-build-qtopcua.sh` in `server/` which will clone and build qtopca assuming that Qt 5.15.2 is installed in `$HOME/Qt`.
+- For the example OPC UA server you need to install Qt (see https://doc.qt.io/qt-5/gettingstarted.html) along with the qtopcua module (see https://github.com/qt/qtopcua). I used Qt 5.15.2. There is a script `clone-and-build-qtopcua.sh` in `server/` which will clone and build qtopca assuming that Qt 5.15.2 is installed in `$HOME/Qt`.
 - qtopcua also contains the waterpump example server this demo is using as a backend. Some lines were changed (see `.patch`-files) in the example to make it start pumping forever right after it was started.
 - To run the server you can use the script `make-and-run-waterpump-server.sh` in `server/`
 - To check whether everything works you can start the Qt client using `LD_LIBRARY_PATH=$HOME/Qt/5.15.2/gcc_64/lib/:$LD_LIBRARY_PATH build/examples/opcua/waterpump/waterpump-qmlcpp/waterpump-qmlcpp`
